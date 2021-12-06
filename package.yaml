@@ -1,0 +1,28 @@
+name:                parse
+version:             0.1.0.0
+github:              "jlagarespo/parse"
+license:             BSD3
+author:              "Jacob Lagares Pozo"
+maintainer:          "jlagarespo@protonmail.com"
+copyright:           "2021 Jacob Lagares Pozo"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+synopsis:            Simple way to parse strings with Python-like format strings.
+category:            Parser
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please refer to the README file that ships with this package.
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+  - split
