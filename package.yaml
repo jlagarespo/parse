@@ -25,8 +25,8 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
-  - split
-  - template-haskell
+  - template-haskell == 2.16.0.0
+  - split == 0.2.3.4
   - OneTuple == 0.3.1
 
 default-extensions:
