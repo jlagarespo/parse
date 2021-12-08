@@ -27,12 +27,19 @@ source-repository head
 
 library
   exposed-modules:
+      Instances
       Parse
   other-modules:
       Paths_parse
   hs-source-dirs:
       src
+  default-extensions:
+      FlexibleInstances
+      TemplateHaskell
+      LambdaCase
   build-depends:
-      base >=4.7 && <5
+      OneTuple ==0.3.1
+    , base >=4.7 && <5
     , split
+    , template-haskell
   default-language: Haskell2010

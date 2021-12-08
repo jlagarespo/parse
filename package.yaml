@@ -26,3 +26,10 @@ library:
   source-dirs: src
   dependencies:
   - split
+  - template-haskell
+  - OneTuple == 0.3.1
+
+default-extensions:
+- FlexibleInstances
+- TemplateHaskell
+- LambdaCase
