@@ -1,6 +1,7 @@
-module Instances where
+module Parse.Internal.Instances where
 
 import Control.Monad
+import Data.List.Split (splitOn)
 import Language.Haskell.TH
 
 -- Dear future self,
@@ -16,7 +17,7 @@ parseTupleInstance n = do
   unless (n > 0) $
     fail $ "Non-positive size: " ++ show n
 
-  doParse <- [|parseListEither format str|]
+  doParse <- [|parseParts (splitOn "{}" format) str|]
   invalidLengthL <- [p|Right result|]
   invalidLengthR <- [|Left $ "Parsed " ++ show (length result) ++ " values, expected " ++
                       show n ++ "."|]

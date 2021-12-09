@@ -27,8 +27,9 @@ source-repository head
 
 library
   exposed-modules:
-      Instances
       Parse
+      Parse.Internal.Instances
+      Parse.Internal.Parse
   other-modules:
       Paths_parse
   hs-source-dirs:

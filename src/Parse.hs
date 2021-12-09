@@ -1,79 +1,47 @@
 module Parse where
 
-import Data.List (inits, tails)
 import Data.List.Split (splitOn)
-import Data.Maybe (mapMaybe, catMaybes)
 
-import Instances
+import Parse.Internal.Parse
 
-parseParts :: [String] -> String -> Either String [String]
-parseParts (part:parts@(nextPart:_)) str = do
-  case dropBy part str of
-    Just str' ->
-      let candidates = filter (beginEqual nextPart . snd) (splits str')
-          (parsed, rest) = head candidates
-      in if null candidates
-         then Left $ "No candidates for \"" ++ part ++ "\" in \"" ++ str ++ "\"."
-         else (parsed:) <$> parseParts parts rest
-    Nothing -> Left $ "Expected \"" ++ part ++ "\", instead got \"" ++ str ++ "\"."
-
-  where
-    beginEqual :: String -> String -> Bool
-    beginEqual "" target = target == ""
-    beginEqual str target = take (length str) target == str
-
-    dropBy :: String -> String -> Maybe String
-    dropBy str target =
-      if take (length str) target == str
-      then Just (drop (length str) target)
-      else Nothing
-
-    splits :: [a] -> [([a], [a])]
-    splits x = zip (inits x) (tails x)
-
-parseParts _ _ = Right []
-
-
+-- |Parse @str@ according to the @format@, and return a list of parsed fields. It can fail with an
+-- error. Parsable fields in the format string are denoted with @"{}"@, and they will match anything
+-- until the next block of the format string matches something in @str@.
 parseList :: String -> String -> [String]
 parseList format str =
   case parseListEither format str of
     Left err -> error err
     Right x  -> x
 
-parseListEither :: String -> String -> Either String [String]
-parseListEither format = parseParts (splitOn "{}" format)
-
+-- |Safe variant of @parseList@ which returns a @Maybe@ monad instead of failing with an error.
 parseListMaybe :: ParseTuple a => String -> String -> Maybe a
 parseListMaybe format str =
   case parseTuple format str of
     Left _  -> Nothing
     Right x -> Just x
 
+-- |Safe variant of @parseList@ which returns an @Either@ monad instead of failing with an
+-- error. The @Left@ (error) constructor carries a @String@ that contains information about the
+-- error.
+parseListEither :: String -> String -> Either String [String]
+parseListEither format = parseParts (splitOn "{}" format)
 
-$(parseTupleInstances [2..62])
-
-instance ParseTuple String where
-  parseTuple format str =
-    case parseListEither format str of
-      Right [x] -> Right x
-      Right result -> Left $ "Parsed " ++ show (length result) ++ " values, expected 1."
-      Left x -> Left x
-
-
+-- |Parse @str@ according to the @format@, and return a tuple of parsed fields. It can fail with an
+-- error. Parsable fields in the format string are denoted with @"{}"@, and they will match anything
 parse :: ParseTuple a => String -> String -> a
 parse format str =
   case parseTuple format str of
     Left err -> error err
     Right x  -> x
 
+-- |Safe variant of @parse@ which returns a @Maybe@ monad instead of failing with an error.
 parseMaybe :: ParseTuple a => String -> String -> Maybe a
 parseMaybe format str =
   case parseTuple format str of
     Left _  -> Nothing
     Right x -> Just x
 
-safeParse :: ParseTuple a => String -> String -> Maybe a
-safeParse = parseMaybe
-
+-- |Safe variant of @parse@ which returns an @Either@ monad instead of failing with an error. The
+-- @Left@ (error) constructor carries a @String@ that contains information about the error.
 parseEither :: ParseTuple a => String -> String -> Either String a
 parseEither = parseTuple
