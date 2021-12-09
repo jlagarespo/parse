@@ -16,7 +16,7 @@ parseTupleInstance n = do
   unless (n > 0) $
     fail $ "Non-positive size: " ++ show n
 
-  doParse <- [|parseList format str|]
+  doParse <- [|parseListEither format str|]
   invalidLengthL <- [p|Right result|]
   invalidLengthR <- [|Left $ "Parsed " ++ show (length result) ++ " values, expected " ++
                       show n ++ "."|]
@@ -24,12 +24,14 @@ parseTupleInstance n = do
   parseErrorR <- [|Left x|]
 
   let vars = [mkName ('t' : show n) | n <- [1..n]]
-      tupleSignature = foldl (\acc var -> AppT acc (VarT var)) (TupleT n) vars
+      tupleSignature = foldl (\acc var -> AppT acc (ConT $ mkName "String")) (TupleT n) vars
+        -- foldl (\acc var -> AppT acc (VarT var)) (TupleT n) vars
       parseList = ListP $ map VarP vars
-      parse = TupE $ map (Just . AppE (VarE $ mkName "read") . VarE) vars
-      context = map (AppT (ConT $ mkName "Read") . VarT) vars
-      iDecl = InstanceD Nothing context (AppT (ConT $ mkName "ParseTuple") tupleSignature)
-              [parseDecl]
+      parse = TupE $ map (Just . -- AppE (VarE $ mkName "read")
+                          VarE) vars
+      -- context = map (AppT (ConT $ mkName "Read") . VarT) vars
+      iDecl = InstanceD Nothing [] -- context
+              (AppT (ConT $ mkName "ParseTuple") tupleSignature) [parseDecl]
       parseDecl =
         -- `parseTuple` function
         FunD (mkName "parseTuple")
