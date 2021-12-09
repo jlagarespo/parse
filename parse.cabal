@@ -13,7 +13,7 @@ homepage:       https://github.com/jlagarespo/parse#readme
 bug-reports:    https://github.com/jlagarespo/parse/issues
 author:         Jacob Lagares Pozo
 maintainer:     jlagarespo@protonmail.com
-copyright:      2021 Jacob Lagares Pozo
+copyright:      Jacob Lagares Pozo
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple

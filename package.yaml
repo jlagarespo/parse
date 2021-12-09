@@ -4,7 +4,7 @@ github:              "jlagarespo/parse"
 license:             BSD3
 author:              "Jacob Lagares Pozo"
 maintainer:          "jlagarespo@protonmail.com"
-copyright:           "2021 Jacob Lagares Pozo"
+copyright:           "Jacob Lagares Pozo"
 
 extra-source-files:
 - README.md
