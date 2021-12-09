@@ -14,25 +14,30 @@ compiler can't guess them by their use, they must be specified explicitly (like 
 
 Examples:
 ```hs
-parse "{}, {}, {}, {}, {}" "1, 2, 3, 4, 5" :: (Int, Int, Int, Int, Int)
- == (1, 2, 3, 4, 5)
+parse "It's {}, I love it!" "It's spam, I love it!" :: String
+ == "spam"
 
-parse "{} + {} = {}" "2.1568743 + 7.196057 = 9.3529313" :: (Double, Double, Double)
- == (2.1568743,7.196057,9.3529313)
+parse "{} + {} = {}" "2.1568743 + 7.196057 = 9.3529313" :: (String, String, String)
+ == ("2.1568743","7.196057","9.3529313")
 ```
 
 A safe variant of `parse` is also provided, that returns `Maybe` instead of throwing an error:
 ```hs
-parse "{} * {} = {}" "2 + 3 = 5" :: (Int, Int, Int)
+parse "{} * {} = {}" "2 + 3 = 5" :: (String, String, String)
 *** Exception: No candidates for "" in "2 + 3 = 5".
 
 -- Whereas:
-safeParse "{} * {} = {}" "2 + 3 = 5" :: Maybe (Int, Int, Int)
+parseMaybe "{} * {} = {}" "2 + 3 = 5" :: Maybe (String, String, String)
  == Nothing
 ```
 
-Parse automatically calls `read` on each field, so if you provide a `Read` instance for them, it can
-properly parse your custom types.
+You can also parse lists quite easily:
+```hs
+map read $ parseList "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}" "1, 2, 3, 5, 7, 11, 13, 17, 19, 23" :: [Int]
+ == [1,2,3,5,7,11,13,17,19,23]
+```
+(Note: You're still parsing a fixed amount of values, but now you can, as shown in the example, map
+stuff to it.)
 
 It should be noted that this package lacks most of the features supplied by
 [parse](https://pypi.org/project/parse/), instead providing only basic parsing functionality. This
