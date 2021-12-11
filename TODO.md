@@ -3,9 +3,9 @@
   - Searching a string for a pattern.
   - Parse function that allows for named fileds ("{field_name}") and returns a map in the form of
 	FieldName -> Value. Of course that wouldn't play well with polymorphism.
-* Test suite.
-* Documentation.
 * Find out why template-haskell 2.16.0.0 works just fine, but 2.18.0.0 breaks GHC lol.
+
+* Documentation: Partial.
 
 ## DONE
 ### 2021-12-09: Read problems

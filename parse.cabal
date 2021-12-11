@@ -43,3 +43,22 @@ library
     , split ==0.2.3.4
     , template-haskell ==2.16.0.0
   default-language: Haskell2010
+
+test-suite parse-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_parse
+  hs-source-dirs:
+      test
+  default-extensions:
+      FlexibleInstances
+      TemplateHaskell
+      LambdaCase
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall
+  build-depends:
+      base >=4.7 && <5
+    , parse
+    , tasty ==1.4.2
+    , tasty-hunit ==0.10.0.3
+  default-language: Haskell2010
