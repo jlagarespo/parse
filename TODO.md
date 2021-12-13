@@ -6,6 +6,7 @@
 * Find out why template-haskell 2.16.0.0 works just fine, but 2.18.0.0 breaks GHC lol.
 * Allow braces to be escaped in the format string.
 * More test coverage.
+* `Data.Text` support.
 
 ## DONE
 ### 2021-12-13 (or 14? it was midnight.)
