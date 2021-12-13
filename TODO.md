@@ -5,10 +5,18 @@
 	FieldName -> Value. Of course that wouldn't play well with polymorphism.
 * Find out why template-haskell 2.16.0.0 works just fine, but 2.18.0.0 breaks GHC lol.
 * Allow braces to be escaped in the format string.
-* Better deal with the beggining and end of the string (example: `parse "{} spam" "spam spam spam"
-  :: String` behaves unexpectedly.)
+* More test coverage.
 
 ## DONE
+### 2021-12-13 (or 14? it was midnight.)
+* Better deal with the beggining and end of the string (example: `parse "{} spam" "spam spam spam"
+	:: String` behaves unexpectedly.)
+
+In the process I significantly improved how the `parseParts` function looks. Before it was really
+hacky, now it's much nicer.
+
+* Significantly improve the docs.
+
 ### 2021-12-09: Read problems
 Solved by working around the issue; now we only return tuples of strings, and the user gets to
 `read` them themselves =)
