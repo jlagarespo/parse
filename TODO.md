@@ -4,8 +4,9 @@
   - Parse function that allows for named fileds ("{field_name}") and returns a map in the form of
 	FieldName -> Value. Of course that wouldn't play well with polymorphism.
 * Find out why template-haskell 2.16.0.0 works just fine, but 2.18.0.0 breaks GHC lol.
-
-* Documentation: Partial.
+* Allow braces to be escaped in the format string.
+* Better deal with the beggining and end of the string (example: `parse "{} spam" "spam spam spam"
+  :: String` behaves unexpectedly.)
 
 ## DONE
 ### 2021-12-09: Read problems
