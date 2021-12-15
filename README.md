@@ -7,37 +7,27 @@ puzzles](https://adventofcode.com/2021/day/5), which is in other languages fairl
 requires some overly convoluted, hacky and noncompact solution.
 
 Envious of Python's [parse](https://pypi.org/project/parse/) package, I decided to write my own,
-very stripped down version, in Haskell. This package provides a way to create a sort of template for
-how strings should look, and then parse them accodringly. While inspired by Python format strings,
-the type of each field is not specified in the string itself, and as a matter of fact, if the
-compiler can't guess them by their use, they must be specified explicitly (like in the example.)
+very stripped down version, in Haskell. This package provides a way to create a "template" for how
+strings should look, and parse them accodringly. While inspired by Python format strings, the
+content of each field is returned as a string. If you so desire, you can `read` them manually.
 
 Examples:
 ```hs
-parse "It's {}, I love it!" "It's spam, I love it!" :: String
- == "spam"
+>>> parse "It's {}, I love it!" "It's spam, I love it!" :: String
+"spam"
 
-parse "{} + {} = {}" "2.1568743 + 7.196057 = 9.3529313" :: (String, String, String)
- == ("2.1568743","7.196057","9.3529313")
+>>> parse "{} + {} = {}" "2.1568743 + 7.196057 = 9.3529313" :: (String, String, String)
+("2.1568743","7.196057","9.3529313")
 ```
 
-A safe variant of `parse` is also provided, that returns `Maybe` instead of throwing an error:
+You can also return the parsed fields as a list, instead of a tuple (for long lists, or ones you
+intend to use as a `Functor`.)
 ```hs
-parse "{} * {} = {}" "2 + 3 = 5" :: (String, String, String)
-*** Exception: No candidates for "" in "2 + 3 = 5".
-
--- Whereas:
-parseMaybe "{} * {} = {}" "2 + 3 = 5" :: Maybe (String, String, String)
- == Nothing
+>>> map read $ parseList "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}" "1, 2, 3, 5, 7, 11, 13, 17, 19, 23" :: [Int]
+[1,2,3,5,7,11,13,17,19,23]
 ```
 
-You can also parse lists quite easily:
-```hs
-map read $ parseList "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}" "1, 2, 3, 5, 7, 11, 13, 17, 19, 23" :: [Int]
- == [1,2,3,5,7,11,13,17,19,23]
-```
-(Note: You're still parsing a fixed amount of values, but now you can, as shown in the example, map
-stuff to it.)
+Safe versions of each function are provided alongside them.
 
 It should be noted that this package lacks most of the features supplied by
 [parse](https://pypi.org/project/parse/), instead providing only basic parsing functionality. This
