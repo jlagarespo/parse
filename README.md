@@ -23,8 +23,8 @@ Examples:
 You can also return the parsed fields as a list, instead of a tuple (for long lists, or ones you
 intend to use as a `Functor`.)
 ```hs
->>> map read $ parseList "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}" "1, 2, 3, 5, 7, 11, 13, 17, 19, 23" :: [Int]
-[1,2,3,5,7,11,13,17,19,23]
+>>> map read $ parseList "{}, {}, {}, {}, {}, {}, {}, {}, {}, {}" "2, 3, 5, 7, 11, 13, 17, 19, 23, 29" :: [Int]
+[2,3,5,7,11,13,17,19,23,29]
 ```
 
 Safe versions of each function are provided alongside them.
