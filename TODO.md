@@ -11,12 +11,19 @@
 ## DONE
 ### 2021-12-13 (or 14? it was midnight.)
 * Better deal with the beggining and end of the string (example: `parse "{} spam" "spam spam spam"
-	:: String` behaves unexpectedly.)
+  :: String` behaves unexpectedly.)
 
 In the process I significantly improved how the `parseParts` function looks. Before it was really
 hacky, now it's much nicer.
 
 * Significantly improve the docs.
+
+#### UPDATE (2021-12-15):
+I was incredibly stupid. That whole "fix" completely broke when parsing more than 2 fields. That's
+why you write proper unit tests... (I didn't.)
+
+Anyway, the parsing system has now been reworked. It is about 10x nicer and more elegant. For
+details, check `Parse.Internal.Parse`.
 
 ### 2021-12-09: Read problems
 Solved by working around the issue; now we only return tuples of strings, and the user gets to
