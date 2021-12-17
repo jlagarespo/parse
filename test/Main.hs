@@ -28,14 +28,14 @@ spam =
   , testCase "bad parseMaybe" $
     parseMaybe "It's {}, I love it!" "It's spam, I hate it!" @?= (Nothing :: Maybe String)
   , testCase "bad parseEither" $ parseEither "It's {}, I love it!" "It's spam, I hate it!" @?=
-    (Left "Expected \", I love it!\", instead got \"spam, I hate it!\"." :: Either String String)
+    (Left "No candidates for \", I love it!\" in \"spam, I hate it!\"." :: Either String String)
   -- , testCase "bad parseList" $
   --   parseList "It's {}, I love it!" "It's spam, I hate it!" @?= ???
   , testCase "bad parseListMaybe" $
     parseListMaybe "It's {}, I love it!" "It's spam, I hate it!" @?= Nothing
   , testCase "bad parseListEither" $
     parseListEither "It's {}, I love it!" "It's spam, I hate it!" @?=
-    Left "Expected \", I love it!\", instead got \"spam, I hate it!\"." ]
+    Left "No candidates for \", I love it!\" in \"spam, I hate it!\"." ]
 
 main :: IO ()
 main = defaultMain $ testGroup "Tests" [ spam ]

@@ -16,8 +16,8 @@ Examples:
 >>> parse "It's {}, I love it!" "It's spam, I love it!" :: String
 "spam"
 
->>> parse "{} + {} = {}" "2.1568743 + 7.196057 = 9.3529313" :: (String, String, String)
-("2.1568743","7.196057","9.3529313")
+>>> parse "{} + {} = {}" "3.1415926535 + 2.7182818284 = 5.8598744819" :: (String, String, String)
+("3.1415926535","2.7182818284","5.8598744819")
 ```
 
 You can also return the parsed fields as a list, instead of a tuple (for long lists, or ones you
@@ -32,3 +32,5 @@ Safe versions of each function are provided alongside them.
 It should be noted that this package lacks most of the features supplied by
 [parse](https://pypi.org/project/parse/), instead providing only basic parsing functionality. This
 may or may not change in the future.
+
+Also, the parsing method used is **slow**. It is not intended for parsing large quantities of data.
